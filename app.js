@@ -6,6 +6,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 // var highlightsRouter = require('./routes/highlights');
+var memeRouter = require('./routes/meme');
+var memesRouter = require('./routes/memes');
+
+
+
 
 var app = express();
 
@@ -24,6 +29,12 @@ app.use(express.static(__dirname + '/node_modules/jquery/dist/'));
 
 app.use('/', indexRouter);
 // app.use('/highlights', highlightsRouter);
+app.use('/meme', memeRouter);
+app.use('/memes', memesRouter);
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
