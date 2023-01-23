@@ -1,0 +1,9 @@
+GET http://app.sportdataapi.com/api/v1/soccer/standings?season_id=1980
+apikey: 1a1e3fa0-9001-11ed-9000-cfe4c1a99c5e
+###
+
+GET http://app.sportdataapi.com/api/v1/soccer/teams/12400
+apikey: 1a1e3fa0-9001-11ed-9000-cfe4c1a99c5e
+
+###
+GET http://localhost:3000/api/standings?meme_id=1
