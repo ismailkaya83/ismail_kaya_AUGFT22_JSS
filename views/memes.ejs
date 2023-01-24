@@ -2,41 +2,44 @@
 <html lang="en">
 
 <head>
-  <title>Portfolio</title>
-  <!-- BM Chaneg the path to the css files -->
-  <link rel="stylesheet" href="../../css/bootstrap.min.css" />
-  <link href="../../stylesheets/navbar.css" rel="stylesheet">
+    <title>Portfolio</title>
+    <!-- BM Chaneg the path to the css files -->
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
+    <link href="../../stylesheets/navbar.css" rel="stylesheet">
 
 </head>
 
 <body class="position-relative" data-bs-spy="scroll">
-  <%- include('./partials/navbar.ejs') %>
-    <section class="container">
-      <table class="table" id="table">
+<%- include('./partials/navbar.ejs') %>
+<section class="container">
+    <table class="table" id="table">
         <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Size</th>
+        <tr>
             <th scope="col">Image</th>
+            <th scope="col">Name</th>
             <th scope="col">Options</th>
-          </tr>
+        </tr>
         </thead>
         <tbody>
-
-          <tr>
-            <th scope="row">
-            </th>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-            </td>
-          </tr>
+        <% memes.forEach(function (meme) { %>
+            <tr>
+                <td>
+                    <img style="width: 20%" src="<%= meme.url %>" alt="meme image">
+                </td>
+                <td>
+                    <%= meme.name %>
+                </td>
+                <td>
+                    <a href="/meme-details?id=<%= meme.id %>" class="btn btn-primary">Details</a>
+                </td>
+            </tr>
+        <% }); %>
         </tbody>
-      </table>
-    </section>
-    <%- include('./partials/scripts.ejs') %>
+    </table>
+
+</section>
+<%- include('./partials/scripts.ejs') %>
 </body>
 
 </html>
+
