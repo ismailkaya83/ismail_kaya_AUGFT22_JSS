@@ -30,16 +30,17 @@
                     <%= meme.name %>
                 </td>
                 <td>
-                    <a href="/meme-details?id=<%= meme.id %>" class="btn btn-primary">Details</a>
+                    <form action="/meme" method="POST">
+                        <input type="hidden" name="id" value="<%= meme.id %>" />
+                        <button type="submit" class="btn btn-primary">Details</button>
+                    </form>
                 </td>
             </tr>
         <% }); %>
         </tbody>
     </table>
-
 </section>
 <%- include('./partials/scripts.ejs') %>
 </body>
-
 </html>
 

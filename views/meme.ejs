@@ -10,14 +10,36 @@
 
 <body class="position-relative" data-bs-spy="scroll">
   <%- include('./partials/navbar.ejs') %>
-    <section class="container">
-
-
-      </div>
-
-
-    </section>
-
+  <section class="container">
+      <table class="table" id="table">
+          <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Size</th>
+              <th scope="col">Image</th>
+          </tr>
+          </thead>
+          <% if (meme) { %>
+          <tbody>
+          <tr>
+              <th scope="row"><%= meme.id %></th>
+              <td><%= meme.name %></td>
+              <td><%= meme.width + "x" + meme.height %></td>
+              <td>
+                  <img
+                          class="resize"
+                          height="<%= meme.height %>"
+                          width="<%= meme.width %>"
+                          src="<%= meme.url %>"
+                          alt="meme_comic"
+                  />
+              </td>
+          </tr>
+          <% } %>
+          </tbody>
+      </table>
+  </section>
     <%- include('./partials/scripts.ejs') %>
 </body>
 
