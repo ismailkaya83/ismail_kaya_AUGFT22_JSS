@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Portfolio</title>
-    <!-- BM Chaneg the path to the css files -->
-    <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
-    <link href="../../stylesheets/navbar.css" rel="stylesheet">
-
+    <title>Meme Overview page</title>
+    <%- include('./partials/head.ejs') %>
 </head>
 
-<body class="position-relative" data-bs-spy="scroll">
-<%- include('./partials/navbar.ejs') %>
-
-<section class="d-flex align-items-center mt-3">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search memes" id="searchInput">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" id="searchButton">Search</button>
-                    </div>
+<body class="position-relative mt-3" data-bs-spy="scroll">
+<%- include('./partials/navbar.ejs', {user: user ? user : "Guest", isAutheticated: isAuthenticated}) %>
+<section>
+    <div class="container mt-3">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
+                <div class="search">
+                    <input type="text" class="form-control" placeholder="Search memes" id="searchInput"/>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="search">
+                    <button class="btn btn-primary" id="searchButton">Search</button>
                 </div>
             </div>
         </div>
@@ -31,56 +28,52 @@
     <table class="table" id="table">
         <thead>
         <tr>
-            <th scope="col">Image</th>
             <th scope="col">Name</th>
+            <th scope="col">Image</th>
             <th scope="col">Options</th>
         </tr>
         </thead>
-        <tbody>
-        <% memes.forEach(function (meme) { %>
-            <tr>
-                <td>
-                    <img style="width: 20%" src="<%= meme.url %>" alt="meme image">
-                </td>
-                <td>
-                    <%= meme.name %>
-                </td>
-                <td>
-                    <form action="/meme" method="POST">
-                        <input type="hidden" name="id" value="<%= meme.id %>"/>
-                        <button type="submit" class="btn btn-primary">Details</button>
-                    </form>
-                </td>
-            </tr>
-        <% }); %>
-        </tbody>
+        <% if (memes && memes.length > 0) { %>
+            <tbody id="memeList">
+            <% memes.forEach((meme) => { %>
+                <tr class="<%= meme.visited ? 'visited' : '' %>">
+                    <td><%= meme.name %></td>
+                    <td>
+                        <img class="resize" height="<%= meme.height %>" width="<%= meme.width %>" src="<%= meme.url %>"
+                             alt="">
+                    </td>
+                    <td>
+                        <% if (user && isAuthenticated) { %>
+                            <form action="/meme" method="POST">
+                                <input type="hidden" name="id" value="<%= meme.id %>"/>
+                                <button type="submit" class="btn btn-primary">Details</button>
+                            </form>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+            </tbody>
+        <% } %>
     </table>
 </section>
 <%- include('./partials/scripts.ejs') %>
-
 <script>
     $(document).ready(function () {
-        let table = $("#table tbody");
-        let searchInput = $("#searchInput");
-        let searchButton = $("#searchButton");
-
-        searchButton.click(function () {
-            let searchValue = searchInput.val().toLowerCase();
-            table.find("tr").hide();
-            table.find("tr").filter(function () {
-                let name = $(this).find("td:nth-child(2)").text().toLowerCase();
-                return name.indexOf(searchValue) > -1;
-            }).show();
+        $("#searchButton").click(function () {
+            var value = $("#searchInput").val().toLowerCase();
+            $("#memeList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
         });
-
-        searchInput.on("input", function () {
-            if (!searchInput.val()) {
-                table.find("tr").show();
-            }
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#table tr").filter(function () {
+                if (value === "") {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                }
+            });
         });
     });
 </script>
-
 </body>
 </html>
-
