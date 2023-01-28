@@ -11,6 +11,22 @@
 
 <body class="position-relative" data-bs-spy="scroll">
 <%- include('./partials/navbar.ejs') %>
+
+<section class="d-flex align-items-center mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search memes" id="searchInput">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" id="searchButton">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="container">
     <table class="table" id="table">
         <thead>
@@ -31,7 +47,7 @@
                 </td>
                 <td>
                     <form action="/meme" method="POST">
-                        <input type="hidden" name="id" value="<%= meme.id %>" />
+                        <input type="hidden" name="id" value="<%= meme.id %>"/>
                         <button type="submit" class="btn btn-primary">Details</button>
                     </form>
                 </td>
@@ -41,6 +57,30 @@
     </table>
 </section>
 <%- include('./partials/scripts.ejs') %>
+
+<script>
+    $(document).ready(function () {
+        let table = $("#table tbody");
+        let searchInput = $("#searchInput");
+        let searchButton = $("#searchButton");
+
+        searchButton.click(function () {
+            let searchValue = searchInput.val().toLowerCase();
+            table.find("tr").hide();
+            table.find("tr").filter(function () {
+                let name = $(this).find("td:nth-child(2)").text().toLowerCase();
+                return name.indexOf(searchValue) > -1;
+            }).show();
+        });
+
+        searchInput.on("input", function () {
+            if (!searchInput.val()) {
+                table.find("tr").show();
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
 
