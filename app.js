@@ -1,28 +1,26 @@
 require("dotenv").config({ path: "./.env" });
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const logger = require("morgan");
 const session = require("express-session");
-var JsonStore = require("express-session-json")(session);
+const JsonStore = require("express-session-json")(session);
 const passport = require("passport");
 const flash = require("express-flash");
 const connectEnsureLogin = require("connect-ensure-login");
-const users = require("./data/users.json");
 
 // ROUTES
-var indexRouter = require("./routes/index");
-var memesRouter = require("./routes/memes");
-var memeRouter = require("./routes/meme");
-var loginRouter = require("./routes/login");
+const indexRouter = require("./routes/index");
+const memesRouter = require("./routes/memes");
+const memeRouter = require("./routes/meme");
+const loginRouter = require("./routes/login");
+const logoutRouter = require("./routes/logout");
 
-// Custom object
 const MemeObject = require("./public/js/memeClass");
 
-// Third Party
 const axios = require("axios");
 
-var app = express();
+const app = express();
 app.use(flash());
 // Configure Sessions Middleware
 app.use(session({
@@ -32,10 +30,6 @@ app.use(session({
   store: new JsonStore(),
 }));
 
-const initializePassport = require("./public/js/auth");
-initializePassport(passport, (username) => users[`${username}`]);
-
-// view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -49,11 +43,11 @@ app.use(express.static(__dirname + "/node_modules/jquery/dist/"));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Fetch memes from API and store in res.locals.memes
+
 app.use(async function (req, res, next) {
   if (!req.app.locals.memes) {
     const memes = [];
-    const response = await axios.get(process.env.MEMES_API);
+    const response = await axios.get(process.env.API_URL);
     const data = response.data;
     if (data && data.success) {
       data.data.memes.forEach((meme) => {
@@ -68,26 +62,18 @@ app.use(async function (req, res, next) {
         );
         memes.push(memeObject);
       });
-      console.log("MEMES FETCHED ");
       app.locals.memes = memes;
     }
   }
   next();
 });
 
-// Routes
+
 app.use("/", indexRouter);
 app.use("/meme", connectEnsureLogin.ensureLoggedIn(), memeRouter);
 app.use("/memes", memesRouter);
 app.use("/login", loginRouter);
-app.use("/logout", function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/login");
-  });
-});
+app.use("/logout", logoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

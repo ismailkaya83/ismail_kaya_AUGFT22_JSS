@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Meme Overview Page</title>
-    <!-- Include head partial -->
+    <title>Meme Details Page</title>
     <%- include('./partials/head.ejs') %>
 </head>
 
-<body class="position-relative" data-bs-spy="scroll">
-<!-- Include navbar partial -->
-<%- include('./partials/navbar.ejs', { user: user ? user : 'Guest', isAutheticated: isAuthenticated }) %>
+<body class="position-relative mt-3" data-bs-spy="scroll">
+<%- include('./partials/navbar.ejs') %>
+
 <section class="container">
-    <table class="table" id="table">
-        <thead>
+    <table class="table table-bordered" id="table">
+        <thead class="table-dark">
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
@@ -27,7 +26,6 @@
             <td><%= meme.width + 'x' + meme.height %></td>
             <td>
                 <img
-                        class="resize"
                         height="<%= meme.height %>"
                         width="<%= meme.width %>"
                         src="<%= meme.url %>"

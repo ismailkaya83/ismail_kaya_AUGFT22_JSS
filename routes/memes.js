@@ -5,7 +5,6 @@ router.get("/", (req, res) => {
     res.render("memes", {
         memes: req.app.locals.memes,
         user: req.user ? req.user.username : null,
-        isAuthenticated: req.isAuthenticated()
     });
 });
 

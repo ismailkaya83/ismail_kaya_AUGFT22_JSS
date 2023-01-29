@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/base.css">
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
 </head>
+
 <body>
-<div class="container">
-    <h1 class="text-center my-5">Login</h1>
-    <div class="row">
-        <div class="col-lg-6 mx-auto">
-            <% if (messages && messages.error) { %>
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Error!</strong> <%= messages.error %>
-                </div>
-            <% } %>
-            <form action="/login" method="POST">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="username" class="form-control" id="username" name="username" placeholder="Enter username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
-                </div>
-                <button type="submit" class="btn btn-success">Sign In</button>
-                <a href="/" class="btn btn-primary">Home</a>
-            </form>
+
+<section class="prompt">
+    <h1>Sign in</h1>
+    <% if (messages && messages.error) { %>
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong> <%= messages.error %>
         </div>
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <% } %>
+    <form action="/login" method="POST">
+        <section>
+            <label for="username">Username</label>
+            <input type="username" id="username" name="username" placeholder="Enter username" required>
+        </section>
+        <section>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+        </section>
+        <button type="submit">Sign In</button>
+        <span class="custom-home-link">
+            <a href="/">Home</a>
+        </span>
+    </form>
+</section>
 </body>
 </html>
+

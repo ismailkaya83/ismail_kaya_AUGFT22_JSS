@@ -8,7 +8,7 @@ router.post("/", (req, res) => {
     res.render("meme", {
         meme,
         user: req.user.username,
-        isAuthenticated: true
+        //isAuthenticated: true
     });
 });
 

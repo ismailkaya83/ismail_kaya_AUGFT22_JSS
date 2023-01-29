@@ -3,7 +3,7 @@ section {
 }
 
 .visited {
-    background-color: #ddcfbd !important;
+    background-color: #8A2BE2 !important;
 }
 
 /* classes */
@@ -11,3 +11,41 @@ img.resize {
     width: 20%;
     height: 20%;
 }
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    font-weight: bold;
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+.nav-item:hover {
+    color: red;
+}
+
+.navbar-text {
+    font-weight: bold;
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.logout {
+    font-weight: bold;
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+
+
